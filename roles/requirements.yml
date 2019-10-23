@@ -1,2 +1,2 @@
 # from GitHub
-- src: https://github.com/molnars/ansible-role-openshift-provision.git
+- src: https://github.com/gnuthought/ansible-role-openshift-provision/archive/master.tar.gz#/openshift_provision
