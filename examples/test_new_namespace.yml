@@ -5,7 +5,8 @@
     openshift_connection:
       server: "{{ openshift_connection_server }}"
       token: "{{ openshift_connection_token }}"
-
+  roles:
+  - role: openshift-logging-elasticsearch-hostmount
 
   tasks:
   - name: Provision BuildConfig
