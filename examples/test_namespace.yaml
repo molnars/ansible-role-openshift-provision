@@ -1,0 +1,41 @@
+- hosts: localhost
+  connection: local
+  gather_facts: no
+  vars:
+    openshift_connection:
+      server: "{{ openshift_connection_server }}"
+      token: "{{ openshift_connection_token }}"
+  roles:
+  - role: openshift-logging-elasticsearch-hostmount
+
+  tasks:
+  - name: Provision BuildConfig
+    openshift_provision:
+      connection: "{{ openshift_connection }}"
+      namespace: "{{ new_namespace }}"
+      resource:
+        apiVersion: v1
+        kind: BuildConfig
+        metadata:
+          name: test-buildconfig
+        spec:
+          nodeSelector: null
+          output:
+            to:
+              kind: ImageStreamTag
+              name: testbuild:latest
+          postCommit: {}
+          resources: {}
+          runPolicy: Serial
+          source:
+            git:
+              uri: https://github.com/openshift/cakephp-ex.git
+            type: Git
+          strategy:
+            sourceStrategy:
+              from:
+                kind: ImageStreamTag
+                name: httpd:2.4
+                namespace: openshift
+            type: Source
+          triggers: []
